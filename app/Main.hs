@@ -2,7 +2,13 @@ module Main where
 
 import Lib
 
-g = Lib.Graph [[1], [2], [0]]
+g = Graph [
+    [1, 2],
+    [3],
+    [4],
+    [],
+    [],
+    []]
 
 main :: IO ()
 main = putStr $ show $ bfs g 0

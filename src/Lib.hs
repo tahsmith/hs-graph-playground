@@ -4,14 +4,13 @@ module Lib
     ) where
 
 data Label = Unvisited | Visited Int deriving (Eq, Show)
-newtype Labelling = Labelling { unLabelling :: [Label] } deriving (Eq, Show)
+newtype Labelling = Labelling [Label] deriving (Eq, Show)
 
 slice :: Int -> Int -> [a] -> [a]
 slice from to xs = take (to - from + 1) (drop from xs)
 
 relabel :: Labelling -> Int -> Int -> Labelling
-relabel labelling v n = Labelling newLabels where
-    labels = unLabelling labelling
+relabel (Labelling labels) v n = Labelling newLabels where
     newLabels = slice 0 (v - 1) labels ++ [Visited n] ++ slice (v + 1) (length labels) labels 
 
 (Labelling labels) !!! v = labels !! v
@@ -39,5 +38,3 @@ bfs g v = visit g initialLabels 0 initialQueue
     where
         initialLabels = Labelling [Unvisited | _ <- [1..(length $ adjList g)]]
         initialQueue = [v]
-
-
